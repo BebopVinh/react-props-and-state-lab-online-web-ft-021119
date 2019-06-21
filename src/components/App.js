@@ -10,18 +10,43 @@ class App extends React.Component {
     this.state = {
       pets: [],
       filters: {
-        type: 'all'
+        type: 'all',
+        pets: null
       }
     }
   }
 
-  onChangeType = () => {
-    fetch("../data/pets.js")
-      .then(response => response.json)
-      .then(json => {
-        debugger
-      })
+  handleChange = (event) => {
+    this.setState({
+      type: event.target.value
+    })
   }
+
+  handleClick(this) {
+    let type = this.state.filters.type
+    let pets = 
+    if(type === "all") {
+      fetch("/api/pets")
+        .then(response => response.json)
+        .then(json => {
+          this.setState({
+            pets: json
+          })
+          debugger
+        })
+    } else {
+      debugger
+      // fetch(`/api/pets?type=${type}`)
+      //   .then(response => response.json)
+      //   .then(json => {
+      //     this.setState({
+      //       pets: json
+      //     })
+      //   })
+    }
+  }
+
+
 
   render() {
     return (
@@ -32,7 +57,7 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters onChangeType={this.onChangeType}/>
+              <Filters onChangeType={this.handleChange} onFindPetsClick={this.handleClick(this)}/>
             </div>
             <div className="twelve wide column">
               <PetBrowser />
