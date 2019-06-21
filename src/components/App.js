@@ -4,49 +4,49 @@ import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
 class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       pets: [],
       filters: {
         type: 'all',
-        pets: null
       }
     }
   }
 
+  // type = this.state.filters.type
+
   handleChange = (event) => {
     this.setState({
-      type: event.target.value
+      filters:{
+        type: event.target.value
+      }
     })
   }
 
-  handleClick(this) {
+  handleClick = (event) => {
     let type = this.state.filters.type
-    let pets = 
+    debugger
     if(type === "all") {
       fetch("/api/pets")
-        .then(response => response.json)
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          this.setState({
+            pets: json
+          })
+        })
+    } else {
+      fetch(`/api/pets?type=${type}`)
+        .then(response => response.json())
         .then(json => {
           this.setState({
             pets: json
           })
-          debugger
         })
-    } else {
-      debugger
-      // fetch(`/api/pets?type=${type}`)
-      //   .then(response => response.json)
-      //   .then(json => {
-      //     this.setState({
-      //       pets: json
-      //     })
-      //   })
     }
   }
-
-
 
   render() {
     return (
@@ -57,7 +57,7 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters onChangeType={this.handleChange} onFindPetsClick={this.handleClick(this)}/>
+              <Filters onChangeType={this.handleChange} clickFunc={this.handleClick} />
             </div>
             <div className="twelve wide column">
               <PetBrowser />
