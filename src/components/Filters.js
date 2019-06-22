@@ -2,11 +2,6 @@ import React from 'react'
 
 class Filters extends React.Component {
 
-  handleClick = () => {
-    debugger
-    return this.props.clickFunc
-  }
-
   render() {
     return (
       <div className="ui form">
@@ -21,7 +16,7 @@ class Filters extends React.Component {
         </div>
 
         <div className="field">
-          <button className="ui secondary button" onClick={this.handleClick}>Find pets</button>
+          <button className="ui secondary button" onClick={this.props.onFindPetsClick}>Find pets</button>
         </div>
       </div>
     )

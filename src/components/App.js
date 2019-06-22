@@ -4,8 +4,8 @@ import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       pets: [],
@@ -25,14 +25,13 @@ class App extends React.Component {
     })
   }
 
-  handleClick = (event) => {
+  handleClick = () => {
     let type = this.state.filters.type
-    debugger
+
     if(type === "all") {
       fetch("/api/pets")
         .then(response => response.json())
         .then(json => {
-          console.log(json)
           this.setState({
             pets: json
           })
@@ -57,10 +56,10 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters onChangeType={this.handleChange} clickFunc={this.handleClick} />
+              <Filters onChangeType={this.handleChange} onFindPetsClick={this.handleClick} />
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser pets={this.state.pets}/>
             </div>
           </div>
         </div>
