@@ -13,6 +13,7 @@ class App extends React.Component {
         type: 'all',
       }
     }
+    this.onAdoptPet = this.onAdoptPet.bind(this)
   }
 
   // type = this.state.filters.type
@@ -47,6 +48,11 @@ class App extends React.Component {
     }
   }
 
+  onAdoptPet(petId) {
+    let currentPet = this.state.pets.find(pet => pet.id === petId)
+    currentPet.isAdopted = true
+  }
+
   render() {
     return (
       <div className="ui container">
@@ -59,7 +65,7 @@ class App extends React.Component {
               <Filters onChangeType={this.handleChange} onFindPetsClick={this.handleClick} />
             </div>
             <div className="twelve wide column">
-              <PetBrowser pets={this.state.pets}/>
+              <PetBrowser pets={this.state.pets} onAdoptPet={this.onAdoptPet}/>
             </div>
           </div>
         </div>
